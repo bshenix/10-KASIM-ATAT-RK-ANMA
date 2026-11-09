@@ -1,0 +1,933 @@
+
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <div class="ataturk-image">
+    <img src="atatürk.jpeg" alt="Gazi Mustafa Kemal Atatürk">
+</div>
+<style>
+.ataturk-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.ataturk-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: contain;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 KASIM | Gazi Mustafa Kemal Atatürk Anma Uygulaması</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        turkRed: '#E30A17',
+                        crimsonDark: '#7A000A',
+                        darkBg: '#08090C',
+                        panelBg: '#111319',
+                        panelBorder: '#202430',
+                        accentGold: '#D4AF37'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        serif: ['Cinzel', 'Georgia', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #08090C; }
+        ::-webkit-scrollbar-thumb { background: #202430; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E30A17; }
+        
+        .glass-panel {
+            background: rgba(17, 19, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(227, 10, 23, 0.4);
+            box-shadow: 0 12px 35px -10px rgba(227, 10, 23, 0.25);
+            transform: translateY(-2px);
+        }
+
+        @keyframes flagWave {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-6px) rotate(0.8deg) scale(1.02); }
+        }
+        .animate-flag { animation: flagWave 5s ease-in-out infinite; }
+        
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 20px rgba(227,10,23,0.7)); }
+            50% { opacity: 0.9; filter: drop-shadow(0 0 40px rgba(227,10,23,0.95)); }
+        }
+        .glow-red { animation: pulseGlow 3.5s infinite; }
+
+        .gold-border {
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans selection:bg-turkRed selection:text-white min-h-screen overflow-x-hidden">
+
+    <!-- ==========================================
+         GİRİŞ ANİMASYONU VE WELCOME SCREEN
+    ========================================== -->
+    <div id="introModal" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#040507] transition-all duration-700">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(227,10,23,0.22)_0%,transparent_70%)] pointer-events-none"></div>
+
+        <!-- Dalgalanan Türk Bayrağı -->
+        <div class="relative mb-8 animate-flag text-center px-4">
+            <svg class="w-52 h-36 md:w-72 md:h-48 mx-auto rounded-xl shadow-2xl border border-white/10 glow-red" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                <rect width="1200" height="800" fill="#E30A17"/>
+                <circle cx="425" cy="400" r="240" fill="#ffffff"/>
+                <circle cx="475" cy="400" r="192" fill="#E30A17"/>
+                <polygon points="587.5,400 706.7,438.7 633.0,337.3 633.0,462.7 706.7,361.3" fill="#ffffff"/>
+            </svg>
+        </div>
+
+        <div class="text-center z-10 px-6 max-w-xl space-y-4">
+            <span class="text-xs uppercase tracking-[0.35em] text-turkRed font-bold block">10 Kasım Atatürk'ü Anma Günü Özel</span>
+            <h1 class="font-serif text-3xl md:text-5xl font-black text-white tracking-wide leading-tight">FİKİRLER ÖLMEZ</h1>
+            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed">
+                Cumhuriyetimizin kurucusu Gazi Mustafa Kemal Atatürk’ü aramızdan ayrılışının yıl dönümünde saygı, minnet ve sonsuz özlemle anıyoruz.
+            </p>
+
+            <button id="enterBtn" onclick="enterApp()" class="group relative inline-flex items-center justify-center px-9 py-4 font-bold text-white transition-all duration-300 bg-turkRed rounded-full shadow-xl shadow-red-950/60 hover:bg-red-600 hover:shadow-red-600/50 hover:scale-105 active:scale-95">
+                <i class="fa-solid fa-volume-high mr-3 text-lg group-hover:animate-bounce"></i>
+                <span>Tıkla!</span>
+            </button>
+            <p class="text-[11px] text-gray-500 block pt-2"><i class="fa-solid fa-circle-info mr-1"></i> Ses efektleri ve anma müzikleri aktifleşecektir.</p>
+        </div>
+        
+        <div class="absolute bottom-6 text-xs text-gray-600 tracking-widest font-mono uppercase">
+            DEVELOPED BY <span class="text-gray-400 font-bold">UMUTTRDEVELOPER</span>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ÜST MENÜ (NAVBAR)
+    ========================================== -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-turkRed/20 border border-turkRed/40 flex items-center justify-center text-turkRed group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-star text-base"></i>
+                </div>
+                <div>
+                    <span class="font-serif font-bold text-lg text-white tracking-wider block leading-tight">10 KASIM</span>
+                    <span class="text-[10px] text-amber-400/90 tracking-widest block font-mono font-semibold">BY UMUTTRDEVELOPER</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#anlam" class="hover:text-turkRed transition-colors">Anlamı</a>
+                <a href="#istiklal" class="hover:text-turkRed transition-colors">İstiklal Marşı</a>
+                <a href="#sozler" class="hover:text-turkRed transition-colors">Sözleri</a>
+                <a href="#zaman" class="hover:text-turkRed transition-colors">Kronoloji</a>
+                <a href="#saygi" class="hover:text-turkRed transition-colors">Saygı Duruşu</a>
+                <a href="#ani" class="hover:text-turkRed transition-colors">Anı Defteri</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="playSFX('click'); document.getElementById('saygi').scrollIntoView({behavior: 'smooth'})" class="px-4 py-2 text-xs font-semibold rounded-xl bg-red-950/60 border border-red-800/50 text-red-200 hover:bg-turkRed hover:text-white transition-all">
+                    <i class="fa-solid fa-clock mr-1.5"></i> Saygı Duruşu
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24 space-y-24">
+                    10 Kasım 1938 · Saat 09:05
+                </div>
+                
+                <h1 class="font-serif text-4xl sm:text-6xl font-black text-white leading-tight tracking-tight">
+                    Sonsuza Kadar <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-turkRed via-red-500 to-amber-400">İzindeyiz.</span>
+                </h1>
+                
+                <p class="text-gray-300 text-base sm:text-lg font-normal leading-relaxed max-w-2xl">
+                    "Benim naçiz vücudum elbet bir gün toprak olacaktır, ancak Türkiye Cumhuriyeti ilelebet payidar kalacaktır."
+                </p>
+
+                <!-- 10 KASIM GERİ SAYAÇ -->
+                <div class="pt-2">
+                    <div class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-3">Bir Sonraki 10 Kasım Saat 09:05'e Kalan Süre</div>
+                    <div class="grid grid-cols-4 gap-3 max-w-md">
+                        <div class="glass-panel p-3.5 rounded-xl text-center border border-white/10">
+                            <span id="days" class="block font-serif text-2xl sm:text-3xl font-extrabold text-white">00</span>
+                            <span class="text-[10px] text-gray-400 uppercase tracking-wider">Gün</span>
+                        </div>
+                        <div class="glass-panel p-3.5 rounded-xl text-center border border-white/10">
+                            <span id="hours" class="block font-serif text-2xl sm:text-3xl font-extrabold text-white">00</span>
+                            <span class="text-[10px] text-gray-400 uppercase tracking-wider">Saat</span>
+                        </div>
+                        <div class="glass-panel p-3.5 rounded-xl text-center border border-white/10">
+                            <span id="minutes" class="block font-serif text-2xl sm:text-3xl font-extrabold text-white">00</span>
+                            <span class="text-[10px] text-gray-400 uppercase tracking-wider">Dakika</span>
+                        </div>
+                        <div class="glass-panel p-3.5 rounded-xl text-center border border-white/10">
+                            <span id="seconds" class="block font-serif text-2xl sm:text-3xl font-extrabold text-turkRed">00</span>
+                            <span class="text-[10px] text-gray-400 uppercase tracking-wider">Saniye</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#istiklal" onclick="playSFX('click')" class="px-6 py-3.5 rounded-xl bg-turkRed hover:bg-red-600 text-white font-semibold text-sm transition-all shadow-lg shadow-red-950/50 flex items-center gap-2">
+                        <i class="fa-solid fa-music"></i> İstiklal Marşı Dinle
+                    </a>
+                    <a href="#ani" onclick="playSFX('click')" class="px-6 py-3.5 rounded-xl bg-panelBg border border-panelBorder hover:border-gray-500 text-gray-200 font-semibold text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen-nib"></i> Anı Defterine Yaz
+                    </a>
+                </div>
+            </div>
+        <!-- ==========================================
+             10 KASIM ANLAMI SEKSİYONU
+        ========================================== -->
+        <section id="anlam" class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <span class="text-xs font-bold text-turkRed tracking-widest uppercase">Miras ve Sorumluluk</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-white">10 Kasım Ne Anlama Gelir?</h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    10 Kasım, yalnızca bir yas günü değil; Atatürk’ün ilke ve inkılaplarını, akla ve bilime dayalı vizyonunu yeniden anlama ve geleceğe taşıma günüdür.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-8 rounded-2xl border border-white/5 glass-panel-hover">
+                    <div class="w-12 h-12 rounded-xl bg-red-950/50 border border-red-800/40 text-turkRed flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-hands-holding-circle"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white mb-3">Saygı ve Minnet</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Milletimizin bağımsızlığı ve modern Türkiye Cumhuriyeti'nin kuruluşu uğruna adanmış bir ömre duyulan sonsuz saygının ifadesidir.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl border border-white/5 glass-panel-hover">
+                    <div class="w-12 h-12 rounded-xl bg-amber-950/40 border border-amber-700/40 text-amber-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white mb-3">Akıl ve Bilim Rehberliği</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        "Hayatta en hakiki mürşit ilimdir" diyerek Türk gençliğine bıraktığı meşaleyi ve çağdaş medeniyet hedefini sürdürme kararlılığıdır.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl border border-white/5 glass-panel-hover">
+                    <div class="w-12 h-12 rounded-xl bg-blue-950/40 border border-blue-700/40 text-blue-400 flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-white mb-3">Cumhuriyet Mirası</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        "Cumhuriyeti biz kurduk, onu yaşatacak ve yüceltecek olan sizlersiniz" sözüyle bizlere emanet edilen milli sorumluluktur.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             İSTİKLAL MARŞI (GERÇEK SES DOSYASI + FULL 10 KITA)
+        ========================================== -->
+        <section id="istiklal" class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/10 relative overflow-hidden space-y-8">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-turkRed/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-white/10 pb-8">
+                <div>
+                    <span class="text-xs font-bold text-turkRed tracking-widest uppercase">Milli Marşımız</span>
+                    <h2 class="font-serif text-3xl font-extrabold text-white mt-1">İstiklal Marşı</h2>
+                    <p class="text-gray-400 text-xs mt-1">Şairi: Mehmet Âkif Ersoy · Bestecisi: Osman Zeki Üngör</p>
+                </div>
+
+                <!-- GERÇEK SES OYNATICI KONTROLÜ -->
+                <div class="bg-darkBg/90 p-4 rounded-2xl border border-white/10 flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+                    <!-- Harici MP3 Ses Elemanı -->
+                    <audio id="anthemAudio" preload="metadata" ontimeupdate="updateAudioProgress()" onended="onAudioEnded()">
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/5/54/IstiklalMarsi-orchestral.ogg" type="audio/ogg">
+                        <source src="https://archive.org/download/IstiklalMarsi_201802/IstiklalMarsi.mp3" type="audio/mpeg">
+                        Tarayıcınız ses öğesini desteklemiyor.
+                    </audio>
+
+                    <button id="anthemPlayBtn" onclick="toggleAnthemStream()" class="w-12 h-12 rounded-xl bg-turkRed hover:bg-red-600 text-white flex items-center justify-center text-lg shadow-lg shadow-red-950/60 transition-all flex-shrink-0">
+                        <i id="anthemIcon" class="fa-solid fa-play"></i>
+                    </button>
+
+                    <div class="w-full sm:w-64 space-y-1.5">
+                        <div class="flex justify-between text-[11px] font-mono text-gray-400">
+                            <span id="anthemCurrentTime">00:00</span>
+                            <span id="anthemStatusLabel" class="text-amber-400 font-semibold">Orijinal Orkestra ve Koro Kaydı</span>
+                            <span id="anthemDuration">--:--</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden cursor-pointer" onclick="seekAudio(event)">
+                            <div id="anthemProgressBar" class="bg-turkRed h-full w-0 transition-all duration-100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- İstiklal Marşı 10 Kıta Gösterimi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-h-[550px] overflow-y-auto pr-3 font-serif leading-relaxed text-gray-300 text-sm sm:text-base">
+                <div class="space-y-6">
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">1. KITA</span>
+                        Korkma, sönmez bu şafaklarda yüzen al sancak;<br>
+                        Sönmeden yurdumun üstünde tüten en son ocak.<br>
+                        O benim milletimin yıldızıdır, parlayacak;<br>
+                        O benimdir, o benim milletimindir ancak.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">2. KITA</span>
+                        Çatma, kurban olayım, çehreni ey nazlı hilâl!<br>
+                        Kahraman ırkıma bir gül! Ne bu şiddet, bu celâl?<br>
+                        Sana olmaz dökülen kanlarımız sonra helâl...<br>
+                        Hakkıdır, Hakk'a tapan, milletimin istiklâl!
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">3. KITA</span>
+                        Ben ezelden beridir hür yaşadım, hür yaşarım.<br>
+                        Hangi çılgın bana zincir vuracakmış? Şaşarım!<br>
+                        Kükremiş sel gibiyim, bendimi çiğner, aşarım.<br>
+                        Yırtarım dağları, enginlere sığmam, taşarım.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">4. KITA</span>
+                        Garbın âfâkını sarmışsa çelik zırhlı duvar,<br>
+                        Benim iman dolu göğsüm gibi serhaddim var.<br>
+                        Ulusun, korkma! Nasıl böyle bir imanı boğar,<br>
+                        'Medeniyet!' dediğin tek dişi kalmış canavar?
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">5. KITA</span>
+                        Arkadaş! Yurduma alçakları uğratma, sakın.<br>
+                        Siper et gövdeni, dursun bu hayâsızca akın.<br>
+                        Doğacaktır sana va'dettiği günler Hakk'ın...<br>
+                        Kim bilir, belki yarın, belki yarından da yakın.
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">6. KITA</span>
+                        Bastığın yerleri 'toprak!' diyerek geçme, tanı:<br>
+                        Düşün altında binlerce kefensiz yatanı.<br>
+                        Sen şehid oğlusun, incitme, yazıktır, atanı:<br>
+                        Verme, dünyaları alsan da, bu cennet vatanı.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">7. KITA</span>
+                        Kim bu cennet vatanın uğruna olmaz ki fedâ?<br>
+                        Şühedâ fışkıracak toprağı sıksan, şühedâ!<br>
+                        Cânı, cânânı, bütün varımı alsın da Hudâ,<br>
+                        Etmesin tek vatanımdan beni dünyada cüdâ.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">8. KITA</span>
+                        Ruhumun senden, İlâhî, şudur ancak emeli:<br>
+                        Değmesin mabedimin göğsüne nâmahrem eli.<br>
+                        Bu ezanlar-ki şehadetleri dinin temeli-<br>
+                        Ebedî yurdumun üstünde benim inlemeli.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">9. KITA</span>
+                        O zaman vecd ile bin secde eder-varsa-taşım,<br>
+                        Her cerîhamdan, İlâhî, boşanıp kanlı yaşım,<br>
+                        Fışkırır ruh-ı mücerred gibi yerden na'şım;<br>
+                        O zaman yükselerek arşa değer belki başım.
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/5 border border-white/5 hover:border-turkRed/30 transition-all">
+                        <span class="text-xs font-bold text-turkRed block mb-2 font-sans">10. KITA</span>
+                        Dalgalan sen de şafaklar gibi ey şanlı hilâl!<br>
+                        Olsun artık dökülen kanlarımın hepsi helâl.<br>
+                        Ebediyyen sana yok, ırkıma yok izmihlâl:<br>
+                        Hakkıdır, hür yaşamış, bayrağımın hürriyet;<br>
+                        Hakkıdır, Hakk'a tapan, milletimin istiklâl!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             ATATÜRK'ÜN UNUTULMAZ SÖZLERİ SLIDER
+        ========================================== -->
+        <section id="sozler" class="space-y-6">
+            <div class="text-center">
+                <span class="text-xs font-bold text-turkRed tracking-widest uppercase">Tarihe Kazınan Düşünceler</span>
+                <h2 class="font-serif text-3xl font-extrabold text-white mt-1">Atatürk'ün Özlü Sözleri</h2>
+            </div>
+
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/10 relative text-center max-w-4xl mx-auto space-y-6">
+                <i class="fa-solid fa-quote-left text-4xl text-turkRed/40 block"></i>
+                <p id="quoteText" class="font-serif text-xl sm:text-2xl text-white font-medium leading-relaxed min-h-[90px] flex items-center justify-center transition-opacity duration-300">
+                    "Hayatta en hakiki mürşit ilimdir."
+                </p>
+                <div class="text-xs font-bold tracking-widest text-amber-400 uppercase font-mono">— Mustafa Kemal Atatürk</div>
+                
+                <div class="flex items-center justify-center gap-4 pt-4">
+                    <button onclick="changeQuote(-1)" class="w-10 h-10 rounded-full bg-white/5 hover:bg-turkRed text-white flex items-center justify-center border border-white/10 transition-all">
+                        <i class="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    <button onclick="copyCurrentQuote()" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-gray-300 border border-white/10 transition-all">
+                        <i class="fa-regular fa-copy mr-1.5"></i> Sözü Kopyala
+                    </button>
+                    <button onclick="changeQuote(1)" class="w-10 h-10 rounded-full bg-white/5 hover:bg-turkRed text-white flex items-center justify-center border border-white/10 transition-all">
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             KRONOLOJİ TIMELINE
+        ========================================== -->
+        <section id="zaman" class="space-y-10">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-turkRed tracking-widest uppercase">Bir Ömrün Hikayesi</span>
+                <h2 class="font-serif text-3xl font-extrabold text-white mt-1">Tarihi Yolculuk</h2>
+            </div>
+
+            <div class="relative border-l-2 border-turkRed/40 ml-4 md:ml-32 space-y-8">
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-turkRed border-4 border-darkBg group-hover:scale-125 transition-transform"></div>
+                    <span class="text-xs font-mono font-bold text-amber-400 tracking-wider">1881 · Selanik</span>
+                    <h3 class="font-serif text-lg font-bold text-white mt-1">Hayata Gözlerini Açtı</h3>
+                    <p class="text-gray-400 text-sm mt-1">Selanik'te dünyaya geldi. Askeri rüştiyede matamatik öğretmeninin verdiği "Kemal" ismiyle Mustafa Kemal adını aldı.</p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-turkRed border-4 border-darkBg group-hover:scale-125 transition-transform"></div>
+                    <span class="text-xs font-mono font-bold text-amber-400 tracking-wider">1915 · Çanakkale</span>
+                    <h3 class="font-serif text-lg font-bold text-white mt-1">Anafartalar Kahramanı</h3>
+                    <p class="text-gray-400 text-sm mt-1">"Ben size taarruzu değil, ölmeyi emrediyorum!" tarihi emriyle Çanakkale Zaferi'nin sembolü haline geldi.</p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-turkRed border-4 border-darkBg group-hover:scale-125 transition-transform"></div>
+                    <span class="text-xs font-mono font-bold text-amber-400 tracking-wider">19 Mayıs 1919 · Samsun</span>
+                    <h3 class="font-serif text-lg font-bold text-white mt-1">Milli Mücadele'nin Başlangıcı</h3>
+                    <p class="text-gray-400 text-sm mt-1">Bandırma Vapuru ile Samsun'a ayak basarak Türk milletinin bağımsızlık meşalesini tutuşturdu.</p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-turkRed border-4 border-darkBg group-hover:scale-125 transition-transform"></div>
+                    <span class="text-xs font-mono font-bold text-amber-400 tracking-wider">29 Ekim 1923 · Ankara</span>
+                    <h3 class="font-serif text-lg font-bold text-white mt-1">Cumhuriyet'in İlanı</h3>
+                    <p class="text-gray-400 text-sm mt-1">"Egemenlik kayıtsız şartsız milletindir" ilkesiyle Türkiye Cumhuriyeti ilan edildi ve ilk Cumhurbaşkanı seçildi.</p>
+                </div>
+
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-turkRed border-4 border-darkBg group-hover:scale-125 transition-transform"></div>
+                    <span class="text-xs font-mono font-bold text-amber-400 tracking-wider">10 Kasım 1938 · Dolmabahçe</span>
+                    <h3 class="font-serif text-lg font-bold text-white mt-1">Sonsuzluğa Uğurlanış</h3>
+                    <p class="text-gray-400 text-sm mt-1">Saat 09:05'te Dolmabahçe Sarayı'nda ebediyete intikal etti. Fikirleriyle ve eserleriyle ölümsüzleşti.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SAYGI DURUŞU & İYİLEŞTİRİLMİŞ GERÇEKÇİ SİREN
+        ========================================== -->
+        <section id="saygi" class="glass-panel p-8 sm:p-12 rounded-3xl border border-white/10 text-center space-y-6">
+            <span class="text-xs font-bold text-turkRed tracking-widest uppercase">1 Dakikalık Sessizlik</span>
+            <h2 class="font-serif text-3xl font-extrabold text-white">Saygı Duruşu Modu</h2>
+            <p class="text-gray-400 text-sm max-w-xl mx-auto">
+                Başlat düğmesine bastığınızda 60 saniyelik anma sireni çalınacak ve 1 dakikalık saygı duruşu geriye sayımı başlayacaktır.
+            </p>
+
+            <div class="font-serif text-5xl sm:text-7xl font-black text-white tracking-widest my-6 font-mono" id="tributeTimerDisplay">
+                01:00
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button id="tributeStartBtn" onclick="toggleTributeTimer()" class="px-8 py-3.5 rounded-xl bg-turkRed hover:bg-red-600 text-white font-bold text-sm transition-all shadow-lg shadow-red-950/60 flex items-center">
+                    <i class="fa-solid fa-play mr-2"></i> Saygı Duruşunu Başlat
+                </button>
+                <button onclick="resetTributeTimer()" class="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 font-bold text-sm border border-white/10 transition-all">
+                    Sıfırla
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             DİJİTAL ANI DEFTERİ
+        ========================================== -->
+        <section id="ani" class="space-y-8">
+            <div class="text-center max-w-xl mx-auto">
+                <span class="text-xs font-bold text-turkRed tracking-widest uppercase">Hafızamız</span>
+                <h2 class="font-serif text-3xl font-extrabold text-white mt-1">Dijital Anı Defteri</h2>
+                <p class="text-gray-400 text-sm mt-1">Atatürk'e dair saygı, minnet ve düşüncelerinizi buraya not edebilirsiniz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <form id="guestbookForm" onsubmit="addNote(event)" class="lg:col-span-5 glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Adınız Soyadınız / Sınıfınız</label>
+                        <input type="text" id="noteAuthor" placeholder="Örn: Umut - 10/A Sınıfı" required max="40"
+                               class="w-full bg-darkBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-turkRed transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-2">Anma Mesajınız</label>
+                        <textarea id="noteContent" rows="4" placeholder="Atatürk hakkındaki düşüncelerinizi yazın..." required max="300"
+                                  class="w-full bg-darkBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-turkRed transition-colors resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-turkRed hover:bg-red-600 text-white font-bold text-sm transition-all shadow-md">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Deftere Ekle
+                    </button>
+                </form>
+
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+                            <h3 class="font-serif text-lg font-bold text-white"><i class="fa-solid fa-book-bookmark text-turkRed mr-2"></i> Ziyaretçi Mesajları</h3>
+                            <button onclick="clearNotes()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">Temizle</button>
+                        </div>
+                        <div id="notesContainer" class="space-y-3 max-h-[320px] overflow-y-auto pr-2"></div>
+                    </div>
+                    <div class="text-[11px] text-gray-500 mt-4 text-right">
+                        * Mesajlar cihazınızın yerel hafızasında saklanır.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         FOOTER
+    ========================================== -->
+    <footer class="border-t border-white/10 bg-[#040507] py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+            <p class="text-xs text-gray-400">
+                10 Kasım Gazi Mustafa Kemal Atatürk'ü Anma Uygulaması · Sonsuz Özlem ve Minnetle
+            </p>
+            <div class="text-sm font-bold font-mono tracking-widest text-gray-200 uppercase">
+                DEVELOPED BY <span class="text-turkRed">UMUTTRDEVELOPER</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-white text-darkBg font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl opacity-0 pointer-events-none transition-all duration-300 transform translate-y-4"></div>
+
+    <!-- ==========================================
+         JAVASCRIPT ENGINE
+    ========================================== -->
+    <script>
+        /* -------------------------------------------------------------
+         * 1. AUDIO ENGINE & REALISTIC SIREN GENERATOR
+         * ------------------------------------------------------------- */
+        let audioCtx = null;
+        let activeSirenGain = null;
+        let activeSirenOsc1 = null;
+        let activeSirenOsc2 = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playSFX(type) {
+            try {
+                const ctx = getAudioContext();
+                if (type === 'click') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(500, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.06);
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.06);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.06);
+                } else if (type === 'gong') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 2.0);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 2.0);
+                }
+            } catch (e) {
+                console.warn("Audio Context Error:", e);
+            }
+        }
+
+        // 10 KASIM GERÇEK SİVİL SAVUNMA SİRENİ SENTEZLEYİCİSİ (1 DAKİKA)
+        function startRealisticSiren() {
+            try {
+                stopSiren();
+                const ctx = getAudioContext();
+                
+                activeSirenOsc1 = ctx.createOscillator();
+                activeSirenOsc2 = ctx.createOscillator();
+                activeSirenGain = ctx.createGain();
+
+                activeSirenOsc1.type = 'sawtooth';
+                activeSirenOsc2.type = 'sine';
+
+                const now = ctx.currentTime;
+                const duration = 60; // 60 saniye boyunca siren çalar
+
+                activeSirenOsc1.frequency.setValueAtTime(380, now);
+                activeSirenOsc2.frequency.setValueAtTime(385, now);
+
+                for (let i = 0; i < duration; i += 4) {
+                    activeSirenOsc1.frequency.linearRampToValueAtTime(820, now + i + 2);
+                    activeSirenOsc1.frequency.linearRampToValueAtTime(380, now + i + 4);
+                    
+                    activeSirenOsc2.frequency.linearRampToValueAtTime(825, now + i + 2);
+                    activeSirenOsc2.frequency.linearRampToValueAtTime(385, now + i + 4);
+                }
+
+                activeSirenGain.gain.setValueAtTime(0.01, now);
+                activeSirenGain.gain.linearRampToValueAtTime(0.2, now + 2);
+                activeSirenGain.gain.setValueAtTime(0.2, now + duration - 3);
+                activeSirenGain.gain.linearRampToValueAtTime(0.001, now + duration);
+
+                activeSirenOsc1.connect(activeSirenGain);
+                activeSirenOsc2.connect(activeSirenGain);
+                activeSirenGain.connect(ctx.destination);
+
+                activeSirenOsc1.start(now);
+                activeSirenOsc2.start(now);
+            } catch (e) {
+                console.error("Siren Hatası:", e);
+            }
+        }
+
+        function stopSiren() {
+            try {
+                if (activeSirenGain && audioCtx) {
+                    activeSirenGain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    setTimeout(() => {
+                        if (activeSirenOsc1) { activeSirenOsc1.stop(); activeSirenOsc1 = null; }
+                        if (activeSirenOsc2) { activeSirenOsc2.stop(); activeSirenOsc2 = null; }
+                    }, 300);
+                }
+            } catch (e) {}
+        }
+
+        /* -------------------------------------------------------------
+         * 2. İSTİKLAL MARŞI ORİJİNAL MP3 PLAYBACK ENGINE
+         * ------------------------------------------------------------- */
+        const anthemAudio = document.getElementById('anthemAudio');
+        const anthemPlayBtn = document.getElementById('anthemPlayBtn');
+        const anthemIcon = document.getElementById('anthemIcon');
+        const anthemCurrentTime = document.getElementById('anthemCurrentTime');
+        const anthemDuration = document.getElementById('anthemDuration');
+        const anthemProgressBar = document.getElementById('anthemProgressBar');
+        const anthemStatusLabel = document.getElementById('anthemStatusLabel');
+
+        function toggleAnthemStream() {
+            if (anthemAudio.paused) {
+                anthemAudio.play().then(() => {
+                    anthemIcon.className = 'fa-solid fa-pause';
+                    anthemStatusLabel.textContent = 'Oynatılıyor... (Orkestra)';
+                    showToast('İstiklal Marşı çalınıyor...');
+                }).catch(err => {
+                    showToast('Ses oynatılamadı. İnternet bağlantınızı kontrol edin.');
+                });
+            } else {
+                anthemAudio.pause();
+                anthemIcon.className = 'fa-solid fa-play';
+                anthemStatusLabel.textContent = 'Duraklatıldı';
+                showToast('İstiklal Marşı duraklatıldı.');
+            }
+        }
+
+        function updateAudioProgress() {
+            if (!isNaN(anthemAudio.duration)) {
+                const pct = (anthemAudio.currentTime / anthemAudio.duration) * 100;
+                anthemProgressBar.style.width = pct + '%';
+                anthemCurrentTime.textContent = formatTime(anthemAudio.currentTime);
+                anthemDuration.textContent = formatTime(anthemAudio.duration);
+            }
+        }
+
+        function seekAudio(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const clickPos = (e.clientX - rect.left) / rect.width;
+            if (!isNaN(anthemAudio.duration)) {
+                anthemAudio.currentTime = clickPos * anthemAudio.duration;
+            }
+        }
+
+        function onAudioEnded() {
+            anthemIcon.className = 'fa-solid fa-play';
+            anthemProgressBar.style.width = '0%';
+            anthemStatusLabel.textContent = 'Tamamlandı';
+        }
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        /* -------------------------------------------------------------
+         * 3. GÖRSEL YEDEKLEME (IMAGE FALLBACK)
+         * ------------------------------------------------------------- */
+        function handleImgError(img) {
+            img.src = "https://upload.wikimedia.org/wikipedia/commons/a/a8/Ataturk_1930s.jpg";
+            img.onerror = function() {
+                img.src = "https://placehold.co/600x800/111319/FFFFFF?text=Gazi+Mustafa+Kemal+Ataturk";
+            };
+        }
+
+        /* -------------------------------------------------------------
+         * 4. GİRİŞ ANİMASYONU MODALI
+         * ------------------------------------------------------------- */
+        function enterApp() {
+            playSFX('gong');
+            const intro = document.getElementById('introModal');
+            intro.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 700);
+        }
+
+        /* -------------------------------------------------------------
+         * 5. GERİ SAYAÇ
+         * ------------------------------------------------------------- */
+        function updateCountdown() {
+            const now = new Date();
+            let year = now.getFullYear();
+            let target = new Date(year, 10, 10, 9, 5, 0);
+
+            if (now > target) {
+                target = new Date(year + 1, 10, 10, 9, 5, 0);
+            }
+
+            const diff = target - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* -------------------------------------------------------------
+         * 6. ATATÜRK SÖZLERİ CAROUSEL
+         * ------------------------------------------------------------- */
+        const quotes = [
+            "Benim naçiz vücudum elbet bir gün toprak olacaktır, ancak Türkiye Cumhuriyeti ilelebet payidar kalacaktır.",
+            "Hayatta en hakiki mürşit ilimdir.",
+            "Yurtta sulh, cihanda sulh.",
+            "Beni görmek demek mutlaka yüzümü görmek değildir. Benim fikirlerimi, benim duygularımı anlıyorsanız ve hissediyorsanız bu kâfidir.",
+            "Bütün ümidim gençliktedir.",
+            "Cumhuriyeti biz kurduk, onu yaşatacak ve yüceltecek olan sizlersiniz.",
+            "Öğretmenler; yeni nesil sizin eseriniz olacaktır.",
+            "Egemenlik kayıtsız şartsız milletindir."
+        ];
+
+        let currentQuoteIndex = 0;
+
+        function changeQuote(direction) {
+            playSFX('click');
+            currentQuoteIndex = (currentQuoteIndex + direction + quotes.length) % quotes.length;
+            const quoteEl = document.getElementById('quoteText');
+            quoteEl.style.opacity = '0';
+            setTimeout(() => {
+                quoteEl.textContent = `"${quotes[currentQuoteIndex]}"`;
+                quoteEl.style.opacity = '1';
+            }, 200);
+        }
+
+        function copyCurrentQuote() {
+            playSFX('click');
+            const text = `"${quotes[currentQuoteIndex]}" — Mustafa Kemal Atatürk (10 Kasım Anma Uygulaması)`;
+            navigator.clipboard.writeText(text);
+            showToast("Söz panoya kopyalandı.");
+        }
+
+        /* -------------------------------------------------------------
+         * 7. SAYGI DURUŞU VE SİREN KONTROLÜ
+         * ------------------------------------------------------------- */
+        let tributeTimer = null;
+        let tributeSeconds = 60;
+        let isTributeRunning = false;
+
+        function toggleTributeTimer() {
+            playSFX('click');
+            const btn = document.getElementById('tributeStartBtn');
+            
+            if (isTributeRunning) {
+                clearInterval(tributeTimer);
+                stopSiren();
+                isTributeRunning = false;
+                btn.innerHTML = `<i class="fa-solid fa-play mr-2"></i> Devam Et`;
+            } else {
+                isTributeRunning = true;
+                startRealisticSiren();
+                btn.innerHTML = `<i class="fa-solid fa-pause mr-2"></i> Duraklat`;
+                
+                tributeTimer = setInterval(() => {
+                    tributeSeconds--;
+                    updateTributeDisplay();
+
+                    if (tributeSeconds <= 0) {
+                        clearInterval(tributeTimer);
+                        stopSiren();
+                        isTributeRunning = false;
+                        playSFX('gong');
+                        showToast("Saygı duruşu tamamlandı. Ruhun şad olsun.");
+                        btn.innerHTML = `<i class="fa-solid fa-rotate-right mr-2"></i> Tekrar Başlat`;
+                        tributeSeconds = 60;
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTributeTimer() {
+            playSFX('click');
+            clearInterval(tributeTimer);
+            stopSiren();
+            isTributeRunning = false;
+            tributeSeconds = 60;
+            updateTributeDisplay();
+            document.getElementById('tributeStartBtn').innerHTML = `<i class="fa-solid fa-play mr-2"></i> Saygı Duruşunu Başlat`;
+        }
+
+        function updateTributeDisplay() {
+            const m = Math.floor(tributeSeconds / 60);
+            const s = tributeSeconds % 60;
+            document.getElementById('tributeTimerDisplay').textContent = 
+                `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+
+        /* -------------------------------------------------------------
+         * 8. DİJİTAL ANI DEFTERİ (LOCALSTORAGE)
+         * ------------------------------------------------------------- */
+        function loadNotes() {
+            const container = document.getElementById('notesContainer');
+            let notes = [];
+            try {
+                notes = JSON.parse(localStorage.getItem('umut10kasim_notes_v3') || '[]');
+            } catch (e) { notes = []; }
+
+            container.innerHTML = '';
+
+            if (notes.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 italic">Henüz bir mesaj yazılmadı. İlk anma mesajını siz bırakın!</p>`;
+                return;
+            }
+
+            notes.slice().reverse().forEach(n => {
+                const item = document.createElement('div');
+                item.className = 'p-3.5 rounded-xl bg-white/5 border border-white/5 text-xs space-y-1';
+                item.innerHTML = `
+                    <div class="flex items-center justify-between text-amber-400 font-bold">
+                        <span>${escapeHTML(n.author)}</span>
+                        <span class="text-[10px] text-gray-500 font-mono font-normal">${n.date}</span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">${escapeHTML(n.content)}</p>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function addNote(e) {
+            e.preventDefault();
+            playSFX('click');
+            
+            const author = document.getElementById('noteAuthor').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+
+            if (!author || !content) return;
+
+            let notes = [];
+            try {
+                notes = JSON.parse(localStorage.getItem('umut10kasim_notes_v3') || '[]');
+            } catch (e) { notes = []; }
+
+            const newNote = {
+                author: author,
+                content: content,
+                date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+            };
+
+            notes.push(newNote);
+            localStorage.setItem('umut10kasim_notes_v3', JSON.stringify(notes));
+
+            document.getElementById('noteAuthor').value = '';
+            document.getElementById('noteContent').value = '';
+
+            loadNotes();
+            showToast("Mesajınız Anı Defterine kaydedildi.");
+        }
+
+        function clearNotes() {
+            if (confirm("Bu cihazda kaydedilmiş tüm anı mesajları silinsin mi?")) {
+                playSFX('click');
+                localStorage.removeItem('umut10kasim_notes_v3');
+                loadNotes();
+                showToast("Mesajlar temizlendi.");
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        /* -------------------------------------------------------------
+         * 9. TOAST NOTIFICATION
+         * ------------------------------------------------------------- */
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 3000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadNotes();
+        });
+    </script>
+</body>
+</html>
